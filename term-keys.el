@@ -48,7 +48,7 @@ file."
 
 
 (defcustom term-keys/mapping
-  ;; Emacs		X11		TTY	Qt		macOS	Emacs shifted	X11 shifted	GLFW		winit		Qt sh.	macOS-S	macOS-C Wezterm	        Wez sh.
+  ;; Emacs		X11		TTY	Qt		macOS	Emacs shifted	X11 shifted	GLFW		winit		Qt sh.	macOS-S	macOS-C Wezterm         Wez sh.
 
   '(["<escape>"		"Escape"	1	"Esc"		#x001B	nil		nil		"ESCAPE"	"Escape"	nil	nil	#x001b	"Escape"	nil	]
     ["<f1>"		"F1"		59	"F1"		#xF704	nil		nil		"F1"		"F1"		nil	nil	nil	"F1"		nil	]
@@ -209,64 +209,64 @@ Each item in the list is a 12-element vector:
 
 13: The wezterm key identifiers for shifted keys."
   :type '(repeat
-	  (vector
-	   :tag "Key mapping"
-	   (choice
-	    :tag "Emacs key"
-	    (const
-	     :tag "No corresponding Emacs key"
-	     nil)
-	    (string
-	     :tag "Emacs key name"))
-	   (string
-	    :tag "X11 KeySym")
-	   (integer
-	    :tag "Linux TTY keynumber")
-	   (string
-	    :tag "Qt key name")
-	   (choice
-	    :tag "macOS Unicode character code"
-	    (const
-	     :tag "None"
-	     nil)
-	    (integer
-	     :tag "Character code"))
-	   (choice
-	    :tag "Shifted X11 KeySym"
-	    (const
-	     :tag "Same as non-shifted"
-	     nil)
-	    (string
-	     :tag "Shifted key name"))
-	   (string
-	    :tag "GLFW key name")
-	   (string
-	    :tag "winit key name")
-	   (choice
-	    :tag "Shifted Qt key name"
-	    (const
-	     :tag "Same as non-shifted"
-	     nil)
-	    (string
-	     :tag "Shifted key name"))
-	   (choice
-	    :tag "Shifted macOS Unicode character code"
-	    (const
-	     :tag "Same as non-shifted"
-	     nil)
-	    (integer
-	     :tag "Shifted character code"))
-	   (choice
-	    :tag "Control macOS Unicode character code"
-	    (const
-	     :tag "Same as without Control"
-	     nil)
-	    (integer
-	     :tag "Control character code"))
-	   (string
-	    :tag "Wezterm key name")
-	   (string
-	    :tag "Wezterm shifted key name")))
+    (vector
+     :tag "Key mapping"
+     (choice
+      :tag "Emacs key"
+      (const
+       :tag "No corresponding Emacs key"
+       nil)
+      (string
+       :tag "Emacs key name"))
+     (string
+      :tag "X11 KeySym")
+     (integer
+      :tag "Linux TTY keynumber")
+     (string
+      :tag "Qt key name")
+     (choice
+      :tag "macOS Unicode character code"
+      (const
+       :tag "None"
+       nil)
+      (integer
+       :tag "Character code"))
+     (choice
+      :tag "Shifted X11 KeySym"
+      (const
+       :tag "Same as non-shifted"
+       nil)
+      (string
+       :tag "Shifted key name"))
+     (string
+      :tag "GLFW key name")
+     (string
+      :tag "winit key name")
+     (choice
+      :tag "Shifted Qt key name"
+      (const
+       :tag "Same as non-shifted"
+       nil)
+      (string
+       :tag "Shifted key name"))
+     (choice
+      :tag "Shifted macOS Unicode character code"
+      (const
+       :tag "Same as non-shifted"
+       nil)
+      (integer
+       :tag "Shifted character code"))
+     (choice
+      :tag "Control macOS Unicode character code"
+      (const
+       :tag "Same as without Control"
+       nil)
+      (integer
+       :tag "Control character code"))
+     (string
+      :tag "Wezterm key name")
+     (string
+      :tag "Wezterm shifted key name")))
   :group 'term-keys)
 
 
@@ -310,11 +310,11 @@ Note that the ALT modifier rarely actually corresponds to the Alt
 key on PC keyboards; the META modifier will usually be used
 instead."
   (let ((shift   (elt mods 0))
-	(control (elt mods 1))
-	(meta    (elt mods 2))
-	(super   (elt mods 3))
-	(hyper   (elt mods 4))
-	(alt     (elt mods 5)))
+  (control (elt mods 1))
+  (meta    (elt mods 2))
+  (super   (elt mods 3))
+  (hyper   (elt mods 4))
+  (alt     (elt mods 5)))
     (and
 
      ;; We don't care about Super/Hyper/Alt modifiers
@@ -340,15 +340,18 @@ instead."
 
       ;; ...as well as punctuation and some special characters
       (and (member key '("Return" "Tab" "BackSpace"
-			 "grave" "minus" "equal" "bracketleft" "bracketright" "semicolon"
-			 "apostrophe" "backslash" "comma" "period" "slash" "space"))
-	   control)
+       "grave" "minus" "equal" "bracketleft" "bracketright" "semicolon"
+       "apostrophe" "backslash" "comma" "period" "slash" "space"))
+     control)
 
       ;; Shift + special chars
-      (and (member key '("Return" "BackSpace")) shift)
+      (and (member key '("space" "Return" "BackSpace")) shift)
 
       ;; Menu (Apps) key
       (string-equal key "Menu")
+
+      ;; Hangul key
+      (string-equal key "Hangul")
       ))))
 
 
@@ -377,10 +380,10 @@ prepended with S-, C-, M-, s-, H-, or A- depending on the
 elements of the bool vector MODS are correspondingly non-nil."
   (concat
    (cl-loop for modflag across mods
-	    for index from 0
-	    if modflag
-	    concat (concat (string (elt term-keys/modifier-chars index))
-			   "-"))
+      for index from 0
+      if modflag
+      concat (concat (string (elt term-keys/modifier-chars index))
+         "-"))
 
    ;; Perform Shift-translation
    ;; TODO: we probably should remove the "S-" prefix, but it doesn't
@@ -396,21 +399,21 @@ Use only characters that can safely occur on a command line or
 configuration file.  Current implementation uses base-96 (ASCII
 \x20 .. \x7F)."
   (apply #'string
-	 (nreverse (cl-loop while (not (zerop num))
-			       collect (+ 32 (% num 96))
-			       do (setq num (/ num 96))))))
+   (nreverse (cl-loop while (not (zerop num))
+             collect (+ 32 (% num 96))
+             do (setq num (/ num 96))))))
 
 
 (defun term-keys/decode-number (str)
   "Decode a string STR encoded by `term-keys/encode-number'."
   (cl-do ((bytes (append str nil)
-		 (cdr bytes))
-	  (num 0 (+ (* num 96) (- (car bytes) 32))))
+     (cdr bytes))
+    (num 0 (+ (* num 96) (- (car bytes) 32))))
       ((not bytes) num)))
 
 (cl-loop for n in '(0 1 95 96 97 12345 123456789)
-	 do (cl-assert (eq (term-keys/decode-number
-			    (term-keys/encode-number n)) n)))
+   do (cl-assert (eq (term-keys/decode-number
+          (term-keys/encode-number n)) n)))
 
 
 (defun term-keys/encode-key (key mods)
@@ -423,11 +426,11 @@ table) and the modifiers MODS (a 6-element bool vector indicating
 whether the respective modifier is pressed or not)."
   (term-keys/encode-number
    (cl-loop for index from 0
-	    for factor = 1 then (* factor 2)
-	    for modflag across mods
-	    if modflag
-	    sum factor into modflags
-	    finally return (+ modflags (* factor key)))))
+      for factor = 1 then (* factor 2)
+      for modflag across mods
+      if modflag
+      sum factor into modflags
+      finally return (+ modflags (* factor key)))))
 
 
 (defun term-keys/iterate-keys (fun)
@@ -450,10 +453,10 @@ Collect FUN's return values in a list and return it."
     for modnum from 0 to (1- (lsh 1 (length term-keys/modifier-chars)))
     ;; Convert the integer bitmask to a bool-vector
     for mods = (apply #'bool-vector (mapcar (lambda (n) (not (zerop (logand modnum (lsh 1 n)))))
-					    (number-sequence 0 (1- (length term-keys/modifier-chars)))))
+              (number-sequence 0 (1- (length term-keys/modifier-chars)))))
     if (and
-	(elt keymap 0)                  ; Representable in Emacs?
-	(funcall term-keys/want-key-p-func (elt keymap 1) mods)) ; Want this key combination?
+  (elt keymap 0)                  ; Representable in Emacs?
+  (funcall term-keys/want-key-p-func (elt keymap 1) mods)) ; Want this key combination?
     collect (funcall fun index keymap mods))))
 
 
@@ -478,9 +481,9 @@ Collect FUN's return values in a list and return it."
      (define-key
        input-decode-map
        (concat
-	term-keys/prefix
-	(term-keys/encode-key index mods)
-	term-keys/suffix)
+  term-keys/prefix
+  (term-keys/encode-key index mods)
+  term-keys/suffix)
        (kbd (term-keys/format-key keymap mods))))))
 
 
@@ -495,9 +498,9 @@ well."
   :require 'term-keys
   (if term-keys-mode
       (progn
-	(add-hook 'tty-setup-hook 'term-keys/init)
-	(if (eq (framep-on-display) t)
-	    (term-keys/init)))
+  (add-hook 'tty-setup-hook 'term-keys/init)
+  (if (eq (framep-on-display) t)
+      (term-keys/init)))
     (remove-hook 'tty-setup-hook 'term-keys/init)))
 
 
