@@ -124,7 +124,7 @@ file."
     [nil		"Super_L"	125	"Meta"		nil	nil		nil		"LEFT_SUPER"	"LWin"		nil	nil	nil	"LeftWindows"	nil	]
     [nil		"Alt_L"		56	"Alt"		nil	nil		nil		"LEFT_ALT"	"LAlt"		nil	nil	nil	"LeftAlt"	nil	]
     ["SPC"	 "space"		57	"Space"		#x0020	nil		nil		"SPACE"		"Space"		nil	nil	#x0000	"Space"		nil	]
-    ["<Hangul>"  "Alt_R"		100	"Alt"		nil	nil		nil		"RIGHT_ALT"	"RAlt"		nil	nil	nil	"RightAlt"	nil	]
+    ["<Hangul>"  "Hangul"		122	"Hangul"		nil	nil		nil		"Hangul"	"Hangul"		nil	nil	nil	"Hangul"	nil	]
     [nil		"Super_R"	126	"Meta"		nil	nil		nil		"RIGHT_SUPER"	"RWin"		nil	nil	nil	"RightWindows"	nil	]
     ["<menu>"		"Menu"		127	"Menu"		#x0010	nil		nil		"MENU"		"Apps"		nil	nil	nil	"Applications"	nil	]
     [nil		"Control_R"	97	"Ctrl"		nil	nil		nil		"RIGHT_CONTROL"	"RControl"	nil	nil	nil	"RightControl"	nil	]
@@ -330,7 +330,7 @@ instead."
       (and (member key '("Up" "Down" "Left" "Right" "Home" "End" "Prior" "Next")) (or meta (and control shift)))
 
       ;; S-PgUp/PgDn - usually used for scrolling the terminal, which is not useful in Emacs
-      (and (member key '("Prior" "Next")) shift)
+      ;; (and (member key '("Prior" "Next")) shift)
 
       ;; C-S-x is unrepresentable for letters
       (and (string-match-p "^[a-z]$" key) control shift)
@@ -345,13 +345,16 @@ instead."
      control)
 
       ;; Shift + special chars
-      (and (member key '("space" "Return" "BackSpace")) shift)
+      (and (member key '("space" "Return" "BackSpace")) shift) ;; add space for Alt+Space
 
       ;; Menu (Apps) key
       (string-equal key "Menu")
 
-      ;; Hangul key
+      ;; Hangul / PgDown / PgUp / Delete
       (string-equal key "Hangul")
+      (string-equal key "Prior")
+      (string-equal key "Next")
+      (string-equal key "Delete")
       ))))
 
 
