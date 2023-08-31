@@ -340,9 +340,13 @@ instead."
 
       ;; ...as well as punctuation and some special characters
       (and (member key '("Return" "Tab" "BackSpace"
-       "grave" "minus" "equal" "bracketleft" "bracketright" "semicolon"
-       "apostrophe" "backslash" "comma" "period" "slash" "space"))
-     control)
+                         "grave" "minus" "equal" "bracketleft" "bracketright" "semicolon"
+                         "apostrophe" "backslash" "comma" "period" "slash" "space"))
+           control)
+
+      (and (member key '(
+                         "Return" "Tab" "BackSpace"))
+           meta)
 
       ;; Shift + special chars
       (and (member key '("Tab" "space" "Return" "BackSpace")) shift) ;; add space for Alt+Space
