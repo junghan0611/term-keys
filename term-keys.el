@@ -339,7 +339,7 @@ instead."
       (and (string-match-p "^[0-9]$" key) control)
 
       ;; ...as well as punctuation and some special characters
-      (and (member key '("Return" "Tab" "BackSpace"
+      (and (member key '("Right" "Left" "Return" "Tab" "BackSpace"
                          "grave" "minus" "equal" "bracketleft" "bracketright" "semicolon"
                          "apostrophe" "backslash" "comma" "period" "slash" "space"))
            control)
