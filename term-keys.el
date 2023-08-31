@@ -345,7 +345,7 @@ instead."
      control)
 
       ;; Shift + special chars
-      (and (member key '("space" "Return" "BackSpace")) shift) ;; add space for Alt+Space
+      (and (member key '("Tab" "space" "Return" "BackSpace")) shift) ;; add space for Alt+Space
 
       ;; Menu (Apps) key
       (string-equal key "Menu")
@@ -355,6 +355,19 @@ instead."
       (string-equal key "Prior")
       (string-equal key "Next")
       (string-equal key "Delete")
+      (string-equal key "F1")
+      (string-equal key "F2")
+      (string-equal key "F3")
+      (string-equal key "F4")
+      (string-equal key "F5")
+      (string-equal key "F6")
+      (string-equal key "F7")
+      (string-equal key "F8")
+      (string-equal key "F9")
+      (string-equal key "F10")
+      (string-equal key "F11")
+      (string-equal key "F12")
+
       ))))
 
 
