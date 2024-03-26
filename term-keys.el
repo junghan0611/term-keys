@@ -310,15 +310,15 @@ Note that the ALT modifier rarely actually corresponds to the Alt
 key on PC keyboards; the META modifier will usually be used
 instead."
   (let ((shift   (elt mods 0))
-  (control (elt mods 1))
-  (meta    (elt mods 2))
-  (super   (elt mods 3))
-  (hyper   (elt mods 4))
-  (alt     (elt mods 5)))
+        (control (elt mods 1))
+        (meta    (elt mods 2))
+        (super   (elt mods 3))
+        (hyper   (elt mods 4))
+        (alt     (elt mods 5)))
     (and
 
      ;; We don't care about Super/Hyper/Alt modifiers
-     (not super)
+     ;; (not super)
      (not hyper)
      (not alt)
 
@@ -333,7 +333,7 @@ instead."
       ;; (and (member key '("Prior" "Next")) shift)
 
       ;; C-S-x is unrepresentable for letters
-      (and (string-match-p "^[a-z]$" key) control shift)
+      (and (string-match-p "^[a-z]$" key) control shift super)
 
       ;; C-x is unrepresentable for digits
       (and (string-match-p "^[0-9]$" key) control)
@@ -343,6 +343,16 @@ instead."
                          "grave" "minus" "equal" "bracketleft" "bracketright" "semicolon"
                          "apostrophe" "backslash" "comma" "period" "slash" "space"))
            control)
+
+      (and (member key '("Right" "Left" "Return" "Tab" "BackSpace"
+                         "grave" "minus" "equal" "bracketleft" "bracketright" "semicolon"
+                         "apostrophe" "backslash" "comma" "period" "slash" "space"))
+           super)
+
+      ;; (and (member key '("Right" "Left" "Return" "Tab" "BackSpace"
+      ;;                    "grave" "minus" "equal" "bracketleft" "bracketright" "semicolon"
+      ;;                    "apostrophe" "backslash" "comma" "period" "slash" "space"))
+      ;;      hyper)
 
       (and (member key '(
                          "Return" "Tab" "BackSpace"))

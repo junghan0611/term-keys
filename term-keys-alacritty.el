@@ -40,14 +40,13 @@
   :type '(choice (const "Command")
 		 (const "Control")
 		 (const "Option")
-     ;;	 (const "Super")
+     (const "Super")
      (const "Shift")
 		 (const "Alt")
 		 (const :tag "(none)" nil)))
 
 
-;; (defcustom term-keys/alacritty-modifier-map ["Shift" "Control" "Alt" "Super" "Command" "Option"]
-  (defcustom term-keys/alacritty-modifier-map ["Shift" "Control" "Alt" "Command" "Option"]
+(defcustom term-keys/alacritty-modifier-map ["Shift" "Control" "Alt" "Super" "Command" "Option"]
   "Map of Alacritty modifiers to Emacs modifiers.
 
 This should be a vector of 6 elements, with each element being a
@@ -59,7 +58,7 @@ mapping for this modifier."
 	  (term-keys/alacritty-modifier :tag "Shift")
 	  (term-keys/alacritty-modifier :tag "Control")
 	  (term-keys/alacritty-modifier :tag "Meta")
-;;	  (term-keys/alacritty-modifier :tag "Super")
+	  (term-keys/alacritty-modifier :tag "Super")
 	  (term-keys/alacritty-modifier :tag "Hyper")
 	  (term-keys/alacritty-modifier :tag "Alt"))
   :group 'term-keys/alacritty)
